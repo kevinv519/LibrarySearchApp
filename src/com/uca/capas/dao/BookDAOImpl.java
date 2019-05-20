@@ -29,20 +29,10 @@ public class BookDAOImpl implements BookDAO {
 	@Override
 	public List<Book> findByField(String field, String value) throws DataAccessException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT * FROM book WHERE ?1 LIKE '%?2%'");
+		sb.append("SELECT * FROM book WHERE LOWER(").append(field).append(") LIKE LOWER(?1)");
 		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		query.setParameter(1, field);
-		query.setParameter(2, value);
+		query.setParameter(1, value);
 		List<Book> books = query.getResultList();
 		return books;
-	}
-
-	@Override
-	public Integer getTotalAuthors() throws DataAccessException {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT COUNT(DISTINCT author_book) FROM book");
-		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		Integer total = Integer.valueOf(query.getSingleResult().toString());
-		return total;
 	}
 }

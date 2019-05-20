@@ -27,12 +27,7 @@ public class BookServiceImpl implements BookService {
 			throw new IllegalArgumentException("El filtro seleccionado no es válido o fue alterado.");
 		}
 		filter = filter.concat("_book");
+		value = "%".concat(value).concat("%");
 		return bookDao.findByField(filter, value);
 	}
-
-	@Override
-	public Integer getAuthorsAmount() throws DataAccessException {
-		return bookDao.getTotalAuthors();
-	}
-
 }

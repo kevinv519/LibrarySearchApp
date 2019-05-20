@@ -10,6 +10,4 @@ public interface BookService {
 	List<Book> getAllBooks() throws DataAccessException;
 	
 	List<Book> getFilteredBooks(String filter, String value) throws DataAccessException;
-	
-	Integer getAuthorsAmount() throws DataAccessException;
 }

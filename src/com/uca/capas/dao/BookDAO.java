@@ -10,6 +10,4 @@ public interface BookDAO {
 	public List<Book> getAll() throws DataAccessException;
 	
 	public List<Book> findByField(String field, String value) throws DataAccessException;
-	
-	public Integer getTotalAuthors() throws DataAccessException;
 }
