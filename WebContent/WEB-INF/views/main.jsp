@@ -11,10 +11,10 @@
 <form action="${pageContext.request.contextPath}/books/search" method="post" autocomplete="off">
     Buscar por:
     <select name="filter">
-        <option value="titulo">Titulo</option>
+        <option value="title">Titulo</option>
         <option value="isbn">ISBN</option>
-        <option value="autor">Autor</option>
-        <option value="genero">Género</option>
+        <option value="author">Autor</option>
+        <option value="genre">Género</option>
     </select>
     <input type="text" name="value" id="">
     <button type="submit">Buscar</button>

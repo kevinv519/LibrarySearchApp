@@ -25,43 +25,14 @@ public class BookDAOImpl implements BookDAO {
 		List<Book> books = query.getResultList();
 		return books;
 	}
-
+	
 	@Override
-	public List<Book> findByTitle(String title) throws DataAccessException {
+	public List<Book> findByField(String field, String value) throws DataAccessException {
 		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT * FROM book WHERE title_book LIKE '%?1%'");
+		sb.append("SELECT * FROM book WHERE ?1 LIKE '%?2%'");
 		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		query.setParameter(1, title);
-		List<Book> books = query.getResultList();
-		return books;
-	}
-
-	@Override
-	public List<Book> findByIsbn(String isbn) throws DataAccessException {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT * FROM book WHERE isbn_book LIKE '%?1%'");
-		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		query.setParameter(1, isbn);
-		List<Book> books = query.getResultList();
-		return books;
-	}
-
-	@Override
-	public List<Book> findByAuthor(String author) throws DataAccessException {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT * FROM book WHERE author_book LIKE '%?1%'");
-		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		query.setParameter(1, author);
-		List<Book> books = query.getResultList();
-		return books;
-	}
-
-	@Override
-	public List<Book> findByGenre(String genre) throws DataAccessException {
-		StringBuffer sb = new StringBuffer();
-		sb.append("SELECT * FROM book WHERE genre_book LIKE '%?1%'");
-		Query query = entityManager.createNativeQuery(sb.toString(), Book.class);
-		query.setParameter(1, genre);
+		query.setParameter(1, field);
+		query.setParameter(2, value);
 		List<Book> books = query.getResultList();
 		return books;
 	}
@@ -74,5 +45,4 @@ public class BookDAOImpl implements BookDAO {
 		Integer total = Integer.valueOf(query.getSingleResult().toString());
 		return total;
 	}
-
 }
