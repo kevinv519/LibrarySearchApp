@@ -3,3 +3,8 @@
 body {
     font-family: 'Open Sans', sans-serif;
 }
+
+.force-wrap {
+    word-break: break-all;
+    word-wrap: break-word;
+}
