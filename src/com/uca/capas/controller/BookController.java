@@ -52,6 +52,7 @@ public class BookController {
 	public ModelAndView filterBooks(@RequestParam String filter, @RequestParam String value) {
 		ModelAndView mav = new ModelAndView("books-table");
 		List<Book> books = null;
+		value = value.trim();
 		try {
 			books = bookService.getFilteredBooks(filter, value);
 		} catch(DataAccessException e) {
