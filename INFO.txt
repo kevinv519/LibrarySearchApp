@@ -1,0 +1,6 @@
+Kevin Enmanuel Velásquez Mendoza
+00018616
+
+Database name: library
+Database username: postgres
+No tiene contraseña

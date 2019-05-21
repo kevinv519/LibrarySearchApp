@@ -61,7 +61,17 @@ public class BookController {
 		}
 		mav.addObject("isSearch", true);
 		mav.addObject("books", books);
-		mav.addObject("criteria", filter);
+		String filtro;
+		if (filter.equals("title")) {
+			filtro = "título";
+		} else if (filter.equals("author")) {
+			filtro = "autor";
+		} else if (filter.equals("isbn")) {
+			filtro = "ISBN";
+		} else {
+			filtro = "género";
+		}
+		mav.addObject("criteria", filtro);
 		mav.addObject("value", value);
 		return mav;
 	}
