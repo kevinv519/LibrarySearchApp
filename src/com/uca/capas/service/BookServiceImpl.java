@@ -2,6 +2,7 @@ package com.uca.capas.service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -13,6 +14,7 @@ import com.uca.capas.domain.Book;
 
 @Service
 public class BookServiceImpl implements BookService {
+	private static final Logger log = Logger.getLogger(BookServiceImpl.class.getSimpleName());
 	
 	@Autowired
 	BookDAO bookDao;
@@ -31,33 +33,31 @@ public class BookServiceImpl implements BookService {
 		List<Book> books = bookDao.findByField(filter, "%".concat(value).concat("%"));
 		if (books != null) {
 			if (filter.equals("title_book")) {
-				System.out.println("Entro");
 				books.stream().forEach(o -> o.setTitle(getFilteredFormat(o.getTitle(), value)));
-				books.stream().forEach(o -> o.setTitle(getFilteredFormat(o.getTitle(), StringUtils.capitalize(value))));
-				books.stream().forEach(o -> o.setTitle(getFilteredFormat(o.getTitle(), value.toLowerCase())));
-				books.stream().forEach(o -> o.setTitle(getFilteredFormat(o.getTitle(), value.toUpperCase())));
 			} else if (filter.equals("author_book")) {
 				books.stream().forEach(o -> o.setAuthor(getFilteredFormat(o.getAuthor(), value)));
-				books.stream().forEach(o -> o.setAuthor(getFilteredFormat(o.getAuthor(), StringUtils.capitalize(value))));
-				books.stream().forEach(o -> o.setAuthor(getFilteredFormat(o.getAuthor(), value.toLowerCase())));
-				books.stream().forEach(o -> o.setAuthor(getFilteredFormat(o.getAuthor(), value.toUpperCase())));
 			} else if (filter.equals("isbn_book")) {
 				books.stream().forEach(o -> o.setIsbn(getFilteredFormat(o.getIsbn(), value)));
-				books.stream().forEach(o -> o.setIsbn(getFilteredFormat(o.getIsbn(), StringUtils.capitalize(value))));
-				books.stream().forEach(o -> o.setIsbn(getFilteredFormat(o.getIsbn(), value.toLowerCase())));
-				books.stream().forEach(o -> o.setIsbn(getFilteredFormat(o.getIsbn(), value.toUpperCase())));
 			} else  {
 				books.stream().forEach(o -> o.setGenre(getFilteredFormat(o.getGenre(), value)));
-				books.stream().forEach(o -> o.setGenre(getFilteredFormat(o.getGenre(), StringUtils.capitalize(value))));
-				books.stream().forEach(o -> o.setGenre(getFilteredFormat(o.getGenre(), value.toLowerCase())));
-				books.stream().forEach(o -> o.setGenre(getFilteredFormat(o.getGenre(), value.toUpperCase())));
 			}
 		}
 		return books;
 	}
 	
 	private String getFilteredFormat(String field, String value) {
+		String fieldLowerCase = field.toLowerCase();
+		value = value.toLowerCase();
+		int index = fieldLowerCase.indexOf(value);
+		int delta = 0;
 		String result = "<strong class='text-danger'>%s</strong>";
-		return field.replaceAll(value, String.format(result, value));
+		while (index != -1) {
+			delta = index + value.length();
+			String match = String.format(result, field.substring(index, delta));
+			field = field.substring(0, index) + match + field.substring(delta);
+			fieldLowerCase = field.toLowerCase();
+			index = fieldLowerCase.indexOf(value, index + match.length());
+		}
+		return field;
 	}
 }

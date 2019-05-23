@@ -9,9 +9,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body class="bg-light">
-    <div class="container bg-white p-5">
+	<div class="container bg-white p-5 text-center">
     	<h1>Library Search Web App</h1>
-        <form action="${pageContext.request.contextPath}/books/search" method="get" autocomplete="off" class="form-inline" id="searchForm">
+    	<br>
+        <form action="${pageContext.request.contextPath}/books/search" method="get" autocomplete="off" class="form-inline justify-content-center" id="searchForm">
             Buscar por:
             <select name="filter" class="form-control ml-2">
                 <option value="title">Titulo</option>
